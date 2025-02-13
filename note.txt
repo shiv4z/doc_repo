@@ -1,0 +1,154 @@
+netstat -ano | findstr :8080
+taskkill /PID <PID> /F
+
+cat Catalina.out
+tail -n 100 Catalina.out
+tail -f Catalina.out
+
+
+
+whoami ==> user name
+date ==> date
+cal ==> calendar
+pwd ==> current working directory
+mkdir ==> create new directory
+rmdir ==> remove directory
+cd ==> change directory
+cd .. ==> change to previous directory
+cd /.. ==> change to root directory
+ls ==> list all files
+ls -l ==>see all file as list
+cat ==> crate file with content and display file content
+cat > f1.txt ==> previous data will be lost
+cat >> f1.txt ==> data will be appended
+mv ==> rename the file (mv f1.txt shiv.txt)
+cp ==> copy data from one file to other file
+cp -r d_directory f_directory ==> copy c_directory into f_directory
+wc ==> word count into a file (lines words characters)
+head ==> first 10 lines of the file
+head -n 100 f1.txt ==> first 100 lines of the file(f1.txt)
+tail ==> last 10 lines of the file
+tail -n 100 f1.txt ==> last 100 lines of the file (f1.txt)
+touch ==> create a file
+rm ==> remove a file
+rm -r ==> remove a directory
+rm -rf ==> remove non empty directory.
+
+
+
+## Install Docker In Amazon Linux VM
+
+```
+sudo yum update -y 
+sudo yum install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+exit
+
+
+
+## Install Docker In Ubuntu VM
+
+```
+sudo apt update
+curl -fsSL get.docker.com | /bin/bash
+sudo usermod -aG docker ubuntu 
+exit
+```
+
+
+sudo docker pull docker/welcome-to-docker
+sudo docker images
+sudo docker rmi <image-name/image-id>
+sudo docker ps -- running conatiners
+sudo docker ps -a --all containers
+sudo docker rm <conatiner-name/container-id>
+docker run -d -p 8088:80 --name welcome-to-docker docker/welcome-to-docker
+
+sudo docker build -t <image-name> .
+sudo docker build -t <image-name> . -f <docker-file-name>
+sudo docker tag <image-name> <user-name>/<image-name>
+sudo docker login
+sudo docker login -u <user-name>
+sudo docker push <tag-name>
+
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+sudo docker-compose up ==> create the container
+sudo docker-compose up -d
+sudo docker-compose down
+sudo docker-compose start
+sudo docker-compose stop
+sudo docker-compose ps
+
+docker stop $(docker ps -q) ==> stop all container at once
+
+docker exec -it <container_name> mysql -u<username> -p
+mysql -h 54.209.158.239 -P 3306 -u<root> -p
+
+
+=========================Kubernetes cluster setup============================
+Step - 1 : Create EKS Management Host in AWS
+
+Launch new Ubuntu VM using AWS Ec2 ( t2.micro )
+Connect to machine and install kubectl using below commands
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin
+kubectl version --short --client
+Install AWS CLI latest version using below commands
+sudo apt install unzip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+Install eksctl using below commands
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+
+
+Step - 2 : Create IAM role & attach to EKS Management Host
+
+Create New Role using IAM service ( Select Usecase - ec2 )
+
+Add below permissions for the role
+
+IAM - fullaccess
+VPC - fullaccess
+EC2 - fullaccess
+CloudFomration - fullaccess
+Administrator - acces
+Enter Role Name (eksroleec2)
+
+Attach created role to EKS Management Host (Select EC2 => Click on Security => Modify IAM Role => attach IAM role we have created)
+
+
+Step - 3 : Create EKS Cluster using eksctl
+
+Syntax:
+
+eksctl create cluster --name cluster-name
+--region region-name
+--node-type instance-type
+--nodes-min 2
+--nodes-max 2 \ --zones ,
+
+eksctl create cluster --name shivp-cluster --region ap-south-1 --node-type t2.medium  --zones ap-south-1a,ap-south-1b
+
+
+aws eks list-clusters --region ap-south-1 ==> list all the clusters
+
+
+delete the cluster
+==================
+
+eksctl delete cluster --name shivp-cluster --region ap-south-1
+
+
+kubectl config get-contexts ==> all the running clusters
+
+
