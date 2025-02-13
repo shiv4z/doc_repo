@@ -141,6 +141,11 @@ eksctl create cluster --name shivp-cluster --region ap-south-1 --node-type t2.me
 
 
 aws eks list-clusters --region ap-south-1 ==> list all the clusters
+for cluster in $(aws eks list-clusters --region ap-south-1 --query "clusters[]" --output text); do
+  echo "Deleting cluster: $cluster"
+  aws eks delete-cluster --name $cluster --region ap-south-1
+done
+===>deleting all the clusters 
 
 
 delete the cluster
@@ -150,5 +155,15 @@ eksctl delete cluster --name shivp-cluster --region ap-south-1
 
 
 kubectl config get-contexts ==> all the running clusters
+
+=========
+database
+=========
+psql -h 10.248.213.206 -U postgres -d rgsa_demo
+\dn ==> list all the schema
+SET search_path TO rgsa; ==>setting schema
+SHOW search_path; ==> show current schema
+/dt ==> list all the tables
+
 
 
