@@ -166,4 +166,10 @@ SHOW search_path; ==> show current schema
 /dt ==> list all the tables
 
 
+======================================
+ps -eLf | grep tomcat | wc -l ==> total number of running tomcat thread
+ps -ef | grep tomcat  ==> tomcat process id
+jstack -l <PID> > thread_dump.txt  ==> thread dump
 
+
+ssh username@target_server_ip   ==> switching user
