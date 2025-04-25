@@ -83,6 +83,7 @@ sudo docker-compose down
 sudo docker-compose start
 sudo docker-compose stop
 sudo docker-compose ps
+sudo docker-compose up --scale rest-api=3 -d
 
 docker stop $(docker ps -q) ==> stop all container at once
 
