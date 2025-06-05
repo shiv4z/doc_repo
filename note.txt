@@ -63,6 +63,7 @@ sudo docker rmi <image-name/image-id>
 sudo docker ps -- running conatiners
 sudo docker ps -a --all containers
 sudo docker rm <conatiner-name/container-id>
+sudo docker rm 18766a50e985 -f
 docker run -d -p 8088:80 --name welcome-to-docker docker/welcome-to-docker
 
 sudo docker build -t <image-name> .
@@ -108,17 +109,20 @@ docker swarm join-token worker
 
 To add a worker to this swarm, run the following command:
 
-    docker swarm join \
-    --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx \
-    172.17.0.2:2377
+    docker swarm join --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx 172.17.0.2:2377
 
 docker swarm join-token manager
 
 To add a manager to this swarm, run the following command:
 
-    docker swarm join \
-    --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-7p73s1dx5in4tatdymyhg9hu2 \
-    172.17.0.2:2377
+    docker swarm join --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-7p73s1dx5in4tatdymyhg9hu2 172.17.0.2:2377
+sudo docker swarm leave --force
+
+docker service create --name spring-web-app --publish 8080:8080 shiv4z/spring-web-app
+sudo docker service ps spring-web-app
+sudo docker service rm spring-web-app
+docker node ls
+docker node update --availability drain ip-172-31-28-83.ec2.internal
 
 =========================Kubernetes cluster setup============================
 Step - 1 : Create EKS Management Host in AWS
