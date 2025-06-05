@@ -72,6 +72,8 @@ sudo docker login
 sudo docker login -u <user-name>
 sudo docker push <tag-name>
 
+sudo docker exec -it <container-id> bin/ssh
+sudo docker exec -it <container-id> sh
 
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
@@ -90,6 +92,33 @@ docker stop $(docker ps -q) ==> stop all container at once
 docker exec -it <container_name> mysql -u<username> -p
 mysql -h 54.209.158.239 -P 3306 -u<root> -p
 
+========================Docker Swarm Cluster================================
+docker swarm init --advertise-addr 192.168.99.121
+
+Swarm initialized: current node (bvz81updecsj6wjz393c09vti) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx 172.17.0.2:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+
+docker swarm join-token worker
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join \
+    --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx \
+    172.17.0.2:2377
+
+docker swarm join-token manager
+
+To add a manager to this swarm, run the following command:
+
+    docker swarm join \
+    --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-7p73s1dx5in4tatdymyhg9hu2 \
+    172.17.0.2:2377
 
 =========================Kubernetes cluster setup============================
 Step - 1 : Create EKS Management Host in AWS
