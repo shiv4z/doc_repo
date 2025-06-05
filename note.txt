@@ -73,7 +73,7 @@ sudo docker login
 sudo docker login -u <user-name>
 sudo docker push <tag-name>
 
-sudo docker exec -it <container-id> bin/ssh
+sudo docker exec -it <container-id> bin/bash
 sudo docker exec -it <container-id> sh
 
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
